@@ -29,7 +29,6 @@ void print_int(std::future<int>& fut) {
     int x = fut.get(); // 获取共享状态的值.
     qDebug() << "value: " << x << '\n'; // 打印 value: 10.
 }
-using namespace std;
 
 void fun1(int slp)
 {
