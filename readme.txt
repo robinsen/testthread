@@ -1,2 +1,7 @@
 Qt 线程 和C++线程池测试  
-test
+
+1、Qt线程中的  QThread和movetothread的区别：
+	（1）、QThread的run()函数是在次线程中运行的，其他方法是属于创建QThread的线程；
+	（2）、通过movetothread的对象，则这个对象都是在次线程中运行，主线程（UI线程）和这个对象要进行信号槽连接的话，要使用队列连接（Queued Connection），如果用直接，则这个槽也还是在主线程中运行。
+
+2、C++的线程，传入callback函数，此函数运行在次线程中（可以通过在callback中，在while中，添加队列和互斥量，根据需要执行不同的事件）
