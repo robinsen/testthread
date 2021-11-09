@@ -130,6 +130,7 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug()<<"main thread id "<<QThread::currentThreadId();
 
     m_pthread = new CTestThread();
+    //队列方式   调用槽
     connect(this, SIGNAL(test1()), m_pthread, SLOT(on_test1()), Qt::QueuedConnection);
     connect(this, SIGNAL(test2()), m_pthread, SLOT(on_test2()), Qt::QueuedConnection);
 
@@ -156,19 +157,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    //队列方式调用槽，被调用的槽在次线程中执行
     emit test1();
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    //队列方式调用槽，被调用的槽在次线程中执行
     emit test2();
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    //主线程直接调用槽，被调用的槽在主线程中执行
     m_pthread->test_1();
 }
 
+///[1]
 CTestThread::CTestThread()
 {
     this->moveToThread(&thread);
@@ -203,3 +208,4 @@ void MainWindow::on_pushButton_4_clicked()
 {
     test_threadpool();
 }
+///[1]

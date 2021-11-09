@@ -27,6 +27,7 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
-    threadpool.h
+    threadpool.h \
+    util.h
 
 FORMS    += mainwindow.ui
