@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <memory.h>
+#include <QDebug>
 /**
  * @brief atoi 字符转整数
  * @param p    字符串
@@ -29,7 +30,7 @@ static int funatoi(const char* str) {
     if (bNegative)
         result = -result;
 
-    std::cout << __FUNCTION__ << " result = " << result << std::endl;
+    qDebug() << __FUNCTION__ << " result = " << result;
     return result;
 }
 
@@ -55,7 +56,7 @@ static void funitoa(int num, char* p, int iva=10) {
         ++buf;
     }
     *buf-- = '\0';
-    std::cout << __FUNCTION__ << " result buf = " << p << std::endl;
+    qDebug() << __FUNCTION__ << " result buf = " << p;
 
     //调整位置
     char temp;
@@ -68,7 +69,7 @@ static void funitoa(int num, char* p, int iva=10) {
         ++first;
     }
 
-    std::cout << __FUNCTION__ << " result buf = " << p << std::endl;
+    qDebug() << __FUNCTION__ << " result buf = " << p;
 }
 
 static char* funstrcopy(const char* pSrc, char* pDst)
@@ -79,7 +80,7 @@ static char* funstrcopy(const char* pSrc, char* pDst)
     char* p = pDst;
     while ((*pDst++ = *pSrc++) != '\0');
 
-    std::cout << __FUNCTION__ << " result copy = " << p << std::endl;
+    qDebug() << __FUNCTION__ << " result copy = " << p;
     return p;
 }
 
@@ -96,6 +97,23 @@ static bool isBigEndian()
     if (end.a == 0x01)
         return true;
     return false;
+}
+
+static const int const_example()
+{
+    //整数常量
+    int i = 1;
+    int a = 2;
+    //指针地址指向的值是常量
+    const int* p = &i;
+    //指针地址的值是常量
+    int *const p1 = &i;
+    p = &a;
+    //*p = a;   //会出错
+    *p1 = a;
+    //p1 = &a;    //会出错
+    qDebug()<<" p = "<<*p<<"; p1 = "<<*p1;
+    return a;
 }
 
 #endif // UTIL_H

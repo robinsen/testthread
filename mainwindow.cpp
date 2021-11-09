@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "threadpool.h"
+#include "util.h"
 #include <QThread>
 #include <QDebug>
 #include <thread>
@@ -144,6 +145,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_thread = std::shared_ptr<std::thread>(new std::thread(fun_thread, this));
 
+    const_example();
     qDebug()<<" thread run ";
 
 }
