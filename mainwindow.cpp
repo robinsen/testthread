@@ -12,7 +12,7 @@
 using namespace std;
 
 void fun_thread(MainWindow* mainw) {
-    int i=50;
+    int i=10;
     while (--i) {
         std::this_thread::sleep_for(std::chrono::microseconds(1000));
         qDebug()<<" i "<<i;
@@ -147,7 +147,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     const_example();
     qDebug()<<" thread run ";
-
+    if (isBigEndian())
+        qDebug()<<" is big endian";
+    else
+        qDebug()<<" is small endian";
 }
 
 MainWindow::~MainWindow()
