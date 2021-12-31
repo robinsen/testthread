@@ -34,11 +34,18 @@ static int funatoi(const char* str) {
     return result;
 }
 
+/**
+ * @brief funitoa  整数转字符
+ * @param num      要转的整数
+ * @param p        转换的字符
+ * @param iva      默认10进制
+ */
 static void funitoa(int num, char* p, int iva=10) {
     p = (char*)malloc(10);
     memset(p, 0, 10);
     char* buf = p;
     int val = num;
+    //判断正数还是负数
     if (val<0)
     {
         *buf++ = '-';
@@ -70,6 +77,23 @@ static void funitoa(int num, char* p, int iva=10) {
     }
 
     qDebug() << __FUNCTION__ << " result buf = " << p;
+}
+
+static char* funitoa1(char buf[], int value) {
+    static const char digits[] = {'9','8','7','6','5','4','3','2','1','0','1','2','3','4','5','6','7','8','9'};
+    static const char* zero = digits+9;    //指向0
+
+    char* p = buf;
+    int i = value;
+    do {
+       int sd = i%10;
+       i /= 10;
+       *p++ = zero[sd];
+    }while(i!=0);
+    if (value<0)
+        *p++ = '-';
+    std::reverse(buf, p);
+    return buf;
 }
 
 static char* funstrcopy(const char* pSrc, char* pDst)
@@ -114,6 +138,72 @@ static const int const_example()
     //p1 = &a;    //会出错
     qDebug()<<" p = "<<*p<<"; p1 = "<<*p1;
     return a;
+}
+
+static void bubbleSort(int num[], int len)
+{
+    if (len<=1)
+        return;
+    for (int i=0; i<len; i++)
+    {
+        bool bflag = false;
+        for (int j=0; j<len-i-1; j++)
+        {
+            if (num[j+1]>num[j])
+            {
+                int temp = num[j];
+                num[j] = num[j+1];
+                num[j+1] = temp;
+                bflag = true;
+            }
+        }
+        if (!bflag)
+            break;
+    }
+    QString str;
+    for (int i=0; i<len; i++)
+        str += QString::number(num[i]);
+    qDebug()<<"bubble sort = "<<str;
+}
+
+/**
+ * @brief insertSort   分成有序排列和无序排列
+ * @param num
+ * @param len
+ */
+static void insertSort(int num[], int len)
+{
+    if (len<=1)
+        return;
+    //初始有序序列从1开始
+    for (int i=1; i<len; i++)
+    {
+        int v = num[i];
+        int j = i-1;
+        //找出插入位置
+        for (;j>=0;j--)
+        {
+            if (num[j] > v)
+            {
+                //移动数据
+                num[j+1] = num[j];
+                qDebug()<<" move j = "<<j;
+            }
+            else
+                break;
+        }
+        //插入数据
+       num[j+1] = v;
+    }
+    QString str;
+    for (int i=0; i<len; i++)
+        str += QString::number(num[i]);
+    qDebug()<<"insert sort = "<<str;
+}
+
+static void selectionSort(int num[], int len)
+{
+
 }
 
 #endif // UTIL_H

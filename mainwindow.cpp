@@ -135,13 +135,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(test1()), m_pthread, SLOT(on_test1()), Qt::QueuedConnection);
     connect(this, SIGNAL(test2()), m_pthread, SLOT(on_test2()), Qt::QueuedConnection);
 
-    std::promise<int> prom; // 生成一个 std::promise<int> 对象.
-    std::future<int> fut = prom.get_future(); // 和 future 关联.
-    std::thread t(set_int, std::ref(prom));
-    std::thread t1(print_int, std::ref(fut)); // 将 future 交给另外一个线程t.
+//    std::promise<int> prom; // 生成一个 std::promise<int> 对象.
+//    std::future<int> fut = prom.get_future(); // 和 future 关联.
+//    std::thread t(set_int, std::ref(prom));
+//    std::thread t1(print_int, std::ref(fut)); // 将 future 交给另外一个线程t.
 
-    t.join();
-    t1.join();
+//    t.join();
+//    t1.join();
 
     m_thread = std::shared_ptr<std::thread>(new std::thread(fun_thread, this));
 
@@ -151,11 +151,19 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug()<<" is big endian";
     else
         qDebug()<<" is small endian";
+
+    int test[] = {3,2,7,4,10,1,8,6};
+    bubbleSort(test, 8);
+    insertSort(test, 8);
+    char test1[20];
+    char * pc = funitoa1(test1, -4876943);
+    qDebug()<<" pc ="<<pc;
+
 }
 
 MainWindow::~MainWindow()
 {
-    if (m_thread->joinable())
+    if (m_thread && m_thread->joinable())
         m_thread->join();
     delete ui;
 }
