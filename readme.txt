@@ -1,7 +1,9 @@
-Qt �߳� ��C++�̳߳ز���  
+Qt 线程 和C++线程池测试  
 
-1��Qt�߳��е�  QThread��movetothread������
-	��1����QThread��run()�������ڴ��߳������еģ��������������ڴ���QThread���̣߳�
-	��2����ͨ��movetothread�Ķ���������������ڴ��߳������У����̣߳�UI�̣߳����������Ҫ�����źŲ����ӵĻ���Ҫʹ�ö������ӣ�Queued Connection���������ֱ�ӣ��������Ҳ���������߳������С�
+1、Qt线程中的  QThread和movetothread的区别：
+	（1）、QThread的run()函数是在次线程中运行的，其他方法是属于创建QThread的线程；
+	（2）、通过movetothread的对象，则这个对象都是在次线程中运行，主线程（UI线程）和这个对象要进行信号槽连接的话，要使用队列连接（Queued Connection），如果用直接，则这个槽也还是在主线程中运行；
 
-2��C++���̣߳�����callback�������˺��������ڴ��߳��У�����ͨ����callback�У���while�У����Ӷ��кͻ�������������Ҫִ�в�ͬ���¼���
+2、C++的线程，传入callback函数，此函数运行在次线程中（可以通过在callback中，在while中，添加队列和互斥量，根据需要执行不同的事件）；
+
+3、添加Qt库中使用的d指针例子，类似impl设计模式，添加了宏定义的处理使用更方便，用私有类结构去实例化相应构造类，并在其继承体系上全部通过d指针来初始化列表。
